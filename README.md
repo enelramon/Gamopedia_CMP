@@ -34,7 +34,7 @@ com.gamopedia
 | UI                     | Jetpack Compose            |
 | Architecture           | MVVM + Clean Architecture  |
 | Networking             | Ktor Client                |
-| Caching/DB             | SQLDelight                 |
+| Caching/DB             | Room Database              |
 | Dependency Injection   | Koin                       |
 | Navigation             | Jetpack Navigation Compose |
 | Concurrency            | Kotlin Coroutines + Flow   |
@@ -50,7 +50,7 @@ com.gamopedia
 - Exposes remote data source abstractions to features.
 
 ### `core-database`
-- Sets up **SQLDelight** for type-safe local database handling.
+- Sets up **Room Database** for type-safe local database handling with KMP support.
 - Exposes DAOs and shared database schema.
 
 ---
@@ -75,7 +75,7 @@ The `common` module provides:
 - Includes **game detail screen** with more info and favorite button.
 
 ### ⭐ `feature-favorite`
-- Shows all cached (favorited) games from local SQLDelight DB.
+- Shows all cached (favorited) games from local Room Database.
 - Works offline and updates in real-time via `Flow`.
 
 ---
@@ -103,7 +103,7 @@ data
 (Repository Implementation → DTOs, Mappers, Data Sources)
     ↓
 core
-(core-network with Ktor / core-database with SQLDelight)
+(core-network with Ktor / core-database with Room Database)
 
 
 
@@ -119,9 +119,9 @@ This separation ensures testability, scalability, and easy debugging.
 
 ---
 
-## 🔄 Caching with SQLDelight
+## 🔄 Caching with Room Database
 
-- **SQLDelight** enables type-safe caching of game data.
+- **Room Database** enables type-safe caching of game data with KMP support.
 - Favorite games are stored locally and observed using **Flow**.
 - Cached data is used in the **Favorites** feature and game details.
 
