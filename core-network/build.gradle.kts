@@ -8,6 +8,8 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.ktorfit)
 }
 
 kotlin {
@@ -57,6 +59,9 @@ kotlin {
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
 
+            // Ktorfit dependencies
+            implementation(libs.ktorfit.lib)
+
             implementation(libs.koin.core)
 
 
@@ -99,6 +104,7 @@ android {
 }
 
 dependencies {
+    add("kspCommonMainMetadata", libs.ktorfit.ksp)
     debugImplementation(compose.uiTooling)
 }
 
