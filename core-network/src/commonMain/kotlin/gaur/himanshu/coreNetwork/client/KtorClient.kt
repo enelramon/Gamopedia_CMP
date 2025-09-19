@@ -11,6 +11,15 @@ import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
+/**
+ * @deprecated This client has been replaced by KtorfitClient.
+ * Use KtorfitClient.getInstance() instead for new implementations.
+ * This class will be removed in a future version.
+ */
+@Deprecated(
+    "Use KtorfitClient instead",
+    ReplaceWith("KtorfitClient.getInstance()", "gaur.himanshu.coreNetwork.client.KtorfitClient")
+)
 object KtorClient {
 
     fun getInstance(): HttpClient = HttpClient {
