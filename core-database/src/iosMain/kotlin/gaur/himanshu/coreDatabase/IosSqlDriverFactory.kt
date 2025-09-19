@@ -1,15 +1,12 @@
 package gaur.himanshu.coreDatabase
 
-import app.cash.sqldelight.db.SqlDriver
-import app.cash.sqldelight.driver.native.NativeSqliteDriver
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import platform.Foundation.NSHomeDirectory
 
-actual class SqlDriverFactory actual constructor(context: Any?) {
-
-    actual fun getSqlDriver(): SqlDriver {
-        return NativeSqliteDriver(
-            AppDatabase.Schema,
-            name = "AppDatabase.db"
-        )
-    }
-
+actual fun getDatabaseBuilder(context: Any?): RoomDatabase.Builder<AppDatabase> {
+    val dbFilePath = NSHomeDirectory() + "/AppDatabase.db"
+    return Room.databaseBuilder<AppDatabase>(
+        name = dbFilePath
+    )
 }

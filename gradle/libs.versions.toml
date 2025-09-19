@@ -18,6 +18,8 @@ kotlinx-coroutines = "1.10.2"
 koin = "4.0.3"
 ktor = "3.0.3"
 sqldelight = "2.0.1"
+room = "2.7.0-alpha12"
+ksp = "2.1.20-1.0.29"
 
 
 [libraries]
@@ -62,6 +64,12 @@ sql-delight-android = { module = "app.cash.sqldelight:android-driver", version.r
 sql-delight-ios = { module = "app.cash.sqldelight:native-driver", version.ref = "sqldelight" }
 sql-delight-desktop = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqldelight" }
 
+# Room dependencies
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-common = { module = "androidx.room:room-common", version.ref = "room" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version = "2.5.0-alpha12" }
+
 
 
 [plugins]
@@ -74,3 +82,5 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlinx-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version = "1.9.0" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 sql-delight={id = "app.cash.sqldelight", version.ref = "sqldelight"}
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+androidx-room = { id = "androidx.room", version.ref = "room" }

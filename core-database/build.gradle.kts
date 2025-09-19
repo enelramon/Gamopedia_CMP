@@ -5,7 +5,8 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.sql.delight)
+    alias(libs.plugins.androidx.room)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -32,7 +33,7 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-            implementation(libs.sql.delight.android)
+            implementation(libs.androidx.room.runtime)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -44,8 +45,9 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
 
-            implementation(libs.sql.delight.common)
-            api(libs.sql.delight.common.coroutines)
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.androidx.room.common)
+            implementation(libs.sqlite.bundled)
 
             implementation(libs.koin.core)
 
@@ -55,24 +57,18 @@ kotlin {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
 
-            implementation(libs.sql.delight.desktop)
+            implementation(libs.androidx.room.runtime)
 
         }
 
         iosMain.dependencies {
-            implementation(libs.sql.delight.ios)
+            implementation(libs.androidx.room.runtime)
         }
     }
 }
 
-sqldelight{
-    databases{
-        create("AppDatabase"){
-            packageName.set("gaur.himanshu.coreDatabase")
-            srcDirs("src/commonMain/sqldelight")
-        }
-    }
-    linkSqlite = true
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 
@@ -102,6 +98,7 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+    add("kspCommonMainMetadata", libs.androidx.room.compiler)
 }
 
 compose.desktop {

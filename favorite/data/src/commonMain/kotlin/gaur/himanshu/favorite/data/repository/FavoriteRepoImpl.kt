@@ -1,41 +1,38 @@
 package gaur.himanshu.favorite.data.repository
 
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
 import gaur.himanshu.common.domain.model.Game
-import gaur.himanshu.coreDatabase.AppDatabase
+import gaur.himanshu.coreDatabase.dao.GameDao
+import gaur.himanshu.coreDatabase.entity.Game as GameEntity
 import gaur.himanshu.favorite.domain.repository.FavoriteRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class FavoriteRepoImpl(
-    private val appDatabase: AppDatabase
+    private val gameDao: GameDao
 ) : FavoriteRepository {
     override fun getAllGames(): Flow<List<Game>> {
-        return appDatabase.appDatabaseQueries
-            .getAllGames()
-            .asFlow()
-            .mapToList(Dispatchers.IO)
-            .map {
-                it.map {
+        return gameDao.getAllGames()
+            .map { gameEntities ->
+                gameEntities.map { entity ->
                     Game(
-                        id = it.id.toInt(),
-                        name = it.name,
-                        imageUrl = it.image
+                        id = entity.id.toInt(),
+                        name = entity.name,
+                        imageUrl = entity.image
                     )
                 }
             }
     }
 
     override suspend fun upsert(id: Int, image: String, name: String) {
-        appDatabase.appDatabaseQueries
-            .upsert(id.toLong(), image, name)
+        val gameEntity = GameEntity(
+            id = id.toLong(),
+            image = image,
+            name = name
+        )
+        gameDao.upsert(gameEntity)
     }
 
     override suspend fun delete(id: Int) {
-        appDatabase.appDatabaseQueries
-            .delete(id.toLong())
+        gameDao.delete(id.toLong())
     }
 }
